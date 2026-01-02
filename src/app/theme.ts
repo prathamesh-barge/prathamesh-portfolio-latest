@@ -2,8 +2,23 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  // You can customize your theme here.
-  // For example: https://mui.com/material-ui/customization/theming/
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          fontSize: "16px", // 👈 CRITICAL
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontSize: "16px",
+        },
+      },
+    },
+  },
 });
+
 
 export default theme;
