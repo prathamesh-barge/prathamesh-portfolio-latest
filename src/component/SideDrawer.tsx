@@ -37,6 +37,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import ExperienceTimeline from "./ExperienceTimeline";
 import ExperienceTimelineDesktop from "./ExperienceTimelineDesktop";
+import { useEffect } from "react";
 
 const menuItems = [
   {
@@ -85,6 +86,19 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
 
   const [selectedPage, setSelectedPage] = React.useState("Profile");
+
+  const handlePageChange = (page: string) => {
+    setSelectedPage(page);
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (!open) {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+  }, [open, selectedPage]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -180,7 +194,7 @@ export default function PersistentDrawerLeft() {
       </Drawer>
 
       {/* ================= MAIN PAGE CONTENT ================= */}
-      <Main open={open} sx={{ backgroundColor: "#dfdee2" }}>
+      <Main open={open} sx={{ backgroundColor: "#dfdee2" }} key={selectedPage}>
         <DrawerHeader />
 
         {selectedPage === "Projects" && (
@@ -267,14 +281,19 @@ export default function PersistentDrawerLeft() {
               </Box>
             </Box>
 
-            <Box mt={9}>
+            <Box mt={9} pl={2}>
               <ExperienceTimelineDesktop />
             </Box>
 
             <Box sx={{ m: 6 }}>
-              <NextStepsCTA
+              {/* <NextStepsCTA
                 onProjectsClick={() => setSelectedPage("Projects")}
                 onContactClick={() => setSelectedPage("Contact")}
+              /> */}
+
+              <NextStepsCTA
+                onProjectsClick={() => handlePageChange("Projects")}
+                onContactClick={() => handlePageChange("Contact")}
               />
             </Box>
 
@@ -327,9 +346,8 @@ export default function PersistentDrawerLeft() {
                   `linear-gradient(135deg,
         ${theme.palette.warning.light}15,
         ${theme.palette.grey[100]}
-      )`
-              }
-            }
+      )`,
+              }}
             >
               <Container maxWidth="lg">
                 {/* Section Header */}
