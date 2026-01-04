@@ -1,23 +1,21 @@
 import * as React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import ThemeRegistry from "./ThemeRegistry";
-// import Navigation from "../component/Navigation";
 
+// ✅ Viewport MUST be a separate export
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+// ✅ Metadata ONLY for SEO / OG
 export const metadata: Metadata = {
-  // ✅ Viewport (keep this)
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-
-  // ✅ SEO basics
   title: "Prathamesh Barge | Software Developer",
   description:
     "Software Developer specializing in MERN stack, React, Next.js, and NestJS. Explore my projects and experience.",
 
-  // ✅ Open Graph (LinkedIn reads THIS)
   openGraph: {
     title: "Prathamesh Barge | Software Developer",
     description:
@@ -35,7 +33,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 
-  // ✅ Twitter (optional but good)
   twitter: {
     card: "summary_large_image",
     title: "Prathamesh Barge | Software Developer",
@@ -54,11 +51,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry options={{ key: "mui" }}>
-          {/* <Navigation /> */}
           {children}
         </ThemeRegistry>
       </body>
     </html>
   );
 }
-
